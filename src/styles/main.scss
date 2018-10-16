@@ -1,0 +1,100 @@
+@import "./variable";
+
+body {
+  font-family: $main-font;
+  font-size: $text-size;
+  color: $color-text;
+}
+
+.limiter {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+}
+
+#branding {
+  margin-bottom: 20px;
+  padding-top: 30px;
+  text-align: center;
+
+  .logo {
+    display: inline-block;
+    max-width: 220px;
+  }
+
+  .menu-options {
+    margin-top: 20px;
+    a {
+      min-width: 170px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+#colophon {
+  background-color: $bg-footer;
+  color: #FFFFFF;
+  margin-top: 20px;
+  min-height: 280px;
+  padding: 30px 5px 10px;
+
+  .contact {
+    & > li {
+      margin-bottom: 25px;
+    }
+
+    &__title {
+      color: $color-subtitle;
+      font-size: 1.3em;
+    }
+
+    &__social {
+      li {
+        margin-right: 20px;
+      }
+    }
+
+    a, span, address {
+      font-size: 0.85em;
+    }
+
+    a {
+      color: $colo-link;
+      transition: all .25s ease-in-out;
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
+
+#wrapper {
+  background-color: $bg-wrapper;
+  margin: 30px 0 40px;
+}
+
+#converter {
+  padding: 60px 0;
+
+  #btnCalculate {
+    text-transform: uppercase;
+    min-width: 280px;
+  }
+
+  input.form-control {
+    height: 50px;
+  }
+
+  .actions {
+    padding-top: 14px;
+  }
+}
+
+
+@media (max-width: 760px) {
+  .logo {
+    max-width: 170px;
+  }
+}
+
