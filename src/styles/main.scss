@@ -6,6 +6,12 @@ body {
   color: $color-text;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .limiter {
   max-width: 980px;
   margin: 0 auto;

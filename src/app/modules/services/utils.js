@@ -17,7 +17,6 @@ if (window.NodeList && !NodeList.prototype.forEach) {
  * Transfers sessionStorage from one tab to another
  */
 var sessionStorage_transfer = function(event) {
-
   if (!event) { event = window.event; } // ie suq
   if (!event.newValue) return;          // do nothing if no value to work with
 
@@ -52,42 +51,8 @@ if (!sessionStorage.length) {
 };
 
 
-
-
-/**
- * Just for IE
- * Provides a polyfill: Object.assign on IE Browser.
- */
-if (typeof Object.assign != 'function') {
-  Object.assign = function(target) {
-    'use strict';
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object');
-    }
-
-    target = Object(target);
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index];
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-    }
-    return target;
-  };
-}
-
-
-/**
- * Just for IE
- * Provides a polyfill: String.endsWith on IE Browser.
- */
-if (typeof String.endsWith != 'function') {
-  String.prototype.endsWith = function(pattern) {
-    var d = this.length - pattern.length;
-    return d >= 0 && this.lastIndexOf(pattern) === d;
-  };
+window.numberWithCommas = (x) => {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
 }

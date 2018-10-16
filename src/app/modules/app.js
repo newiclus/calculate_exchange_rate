@@ -2,7 +2,8 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types'; // ES6
 
-import InputControl from "./components/common/InputControl";
+import BaseCurrency from "./components/BaseCurrency";
+import ConverCurrency from "./components/ConvertCurrency";
 import ButtonControl from "./components/common/ButtonControl";
 import ApiCurrency from "./services/ApiCurrency";
 
@@ -11,16 +12,41 @@ class App extends Component {
     super(props);
     this.ApiCurrency = new ApiCurrency();
     this.state = {
-      exchangeRate: 0.0
+      base: "USD",
+      symbols: "EUR,GBP,JPY",
+      currency: "EUR",
+      exchangeRate: {},
+      amount: "",
+      result: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBase = this.handleBase.bind(this);
   }
 
-  handleSubmit () {}
+  handleBase (event) {
+    this.setState({
+      amount: parseInt(event.target.value)
+    });
+  }
+
+  handleSubmit (event) {
+    event.preventDefault();
+
+    let code = this.state.base + this.state.currency;
+    let rate = this.state.exchangeRate[code];
+    let result = this.state.amount * rate;
+    
+    this.setState({
+      result: result.toFixed(3)
+    });
+  }
 
   componentDidMount () {
-    this.ApiCurrency.getExchangeRate("USD", "EUR")
+    let base = this.state.base;
+    let symbols = this.state.symbols;
+
+    this.ApiCurrency.getExchangeRate(base, symbols)
     .then( result => {
       this.setState({
         exchangeRate: result.quotes
@@ -35,12 +61,8 @@ class App extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="row">
-          <div className="col-md-6">
-            <InputControl placeholder="Enter the USD amount" />
-          </div>
-          <div className="col-md-6">
-            <InputControl placeholder="EUR amount" readOnly={true} />
-          </div>
+          <BaseCurrency placeholder="Enter the USD amount" onChange={this.handleBase} />
+          <ConverCurrency placeholder="EUR amount" result={this.state.result} />
 
           <div className="col-md-12 actions text-center">
             <ButtonControl 
