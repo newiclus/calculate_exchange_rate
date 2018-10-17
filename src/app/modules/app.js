@@ -1,11 +1,12 @@
 /* React */
 import React, { Component } from "react";
-import PropTypes from 'prop-types'; // ES6
+//import PropTypes from 'prop-types'; // ES6
 
 import BaseCurrency from "./components/BaseCurrency";
 import ConverCurrency from "./components/ConvertCurrency";
 import ButtonControl from "./components/common/ButtonControl";
 import ApiCurrency from "./services/ApiCurrency";
+import {numberWithCommas} from "./services/utils";
 
 class App extends Component {
   constructor(props) {
@@ -36,9 +37,9 @@ class App extends Component {
     let code = this.state.base + this.state.currency;
     let rate = this.state.exchangeRate[code];
     let result = this.state.amount * rate;
-    
+
     this.setState({
-      result: result.toFixed(3)
+      result: numberWithCommas(result.toFixed(2))
     });
   }
 
@@ -59,10 +60,19 @@ class App extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} noValidate>
         <div className="row">
-          <BaseCurrency placeholder="Enter the USD amount" onChange={this.handleBase} />
-          <ConverCurrency placeholder="EUR amount" result={this.state.result} />
+          <BaseCurrency 
+            idName="amountBase" 
+            placeholder="Enter the amount" 
+            onChange={this.handleBase} 
+            prepend={this.state.base} />
+
+          <ConverCurrency 
+            idName="amountResult" 
+            placeholder="amount" 
+            result={this.state.result} 
+            prepend={this.state.currency} />
 
           <div className="col-md-12 actions text-center">
             <ButtonControl 

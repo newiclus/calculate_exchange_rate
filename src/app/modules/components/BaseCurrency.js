@@ -4,7 +4,12 @@ import InputControl from "./common/InputControl";
 function BaseCurrency (props) {
   return (
     <div className="col-md-6 currency_base">
-      <InputControl placeholder={props.placeholder} onChange={props.onChange} type="number" />
+      <InputControl 
+        idName={props.idName} 
+        placeholder={props.placeholder} 
+        onChange={props.onChange} 
+        type="number"
+        prepend={props.prepend} />
     </div>
   );
 }

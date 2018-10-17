@@ -17,6 +17,9 @@ class InputControl extends Component {
       <div className="form-group">
         <label htmlFor={props.idName}>{props.title}</label>
         <div className="input-group">
+          <div className="input-group-prepend">
+            <div className="input-group-text">{props.prepend}</div>
+          </div>
           <input 
             className="form-control" 
             onChange={props.onChange} 

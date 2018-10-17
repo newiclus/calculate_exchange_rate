@@ -4,7 +4,12 @@ import InputControl from "./common/InputControl";
 function ConvertCurrency (props) {
   return (
     <div className="col-md-6">
-      <InputControl placeholder={props.placeholder} readOnly={true} value={props.result} />
+      <InputControl 
+        idName={props.idName} 
+        placeholder={props.placeholder} 
+        prepend={props.prepend} 
+        readOnly={true} 
+        value={props.result} />
     </div>
   );
 }
