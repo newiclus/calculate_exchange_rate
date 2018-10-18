@@ -14,25 +14,25 @@ export default class ApiCurrency {
   }
 
   /**
-   * @param {string} base    Currency symbol base
-   * @param {string} symbol  Currency symbol to convert
-   * @return {JSON} a JSON object with the exchange rate
+   * @param {string} base    Currency symbol base, e.g: USD
+   * @param {string} symbols  Currencies symbols to convert, e.g: EUR,GBP,PEN
+   * @return {JSON} a JSON object with the exchange rates
    */
-  getExchangeRate (base, symbol) {
+  getExchangeRate (base, symbols) {
     store.removeExpiredKeys();
 
-    if ( store.get('exchange_rate') ) {
-      return Promise.resolve( store.get('exchange_rate') );
+    if ( store.get('exchange_rates') ) {
+      return Promise.resolve( store.get('exchange_rates') );
     }
     else {
       return axios({
         method: 'get',
-        url: this.endpoint + '&source=' + base + '&currencies=' + symbol,
+        url: this.endpoint + '&source=' + base + '&currencies=' + symbols,
         responseType: "json"
       })
       .then( response => {
         let duration = 600000 // 10 min
-        store.set('exchange_rate', response.data, new Date().getTime() + duration);
+        store.set('exchange_rates', response.data, new Date().getTime() + duration);
         return response.data;
       });
     }

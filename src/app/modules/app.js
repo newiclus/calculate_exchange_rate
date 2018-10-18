@@ -3,10 +3,10 @@ import React, { Component } from "react";
 //import PropTypes from 'prop-types'; // ES6
 
 import BaseCurrency from "./components/BaseCurrency";
-import ConverCurrency from "./components/ConvertCurrency";
+import ConvertCurrency from "./components/ConvertCurrency";
 import ButtonControl from "./components/common/ButtonControl";
 import ApiCurrency from "./services/ApiCurrency";
-import {numberWithCommas} from "./services/utils";
+import {numberWithCommas, getQuote} from "./services/Utils";
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class App extends Component {
 
   handleBase (event) {
     this.setState({
-      amount: parseInt(event.target.value)
+      amount: parseFloat(event.target.value)
     });
   }
 
@@ -36,7 +36,7 @@ class App extends Component {
 
     let code = this.state.base + this.state.currency;
     let rate = this.state.exchangeRate[code];
-    let result = this.state.amount * rate;
+    let result = getQuote(this.state.amount, rate);
 
     this.setState({
       result: numberWithCommas(result.toFixed(2))
@@ -68,7 +68,7 @@ class App extends Component {
             onChange={this.handleBase} 
             prepend={this.state.base} />
 
-          <ConverCurrency 
+          <ConvertCurrency 
             idName="amountResult" 
             placeholder="amount" 
             result={this.state.result} 
